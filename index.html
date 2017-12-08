@@ -1,0 +1,175 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<title id="etntitle">$</title>
+</head>
+<body>
+
+
+<div class="container">
+	<div class="col-xs-6 col-xs-offset-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Electroneum Price</div>
+			<div class="panel-body">
+				<div class="row inputform">
+					<div class="col-xs-6">
+						<div class="input-group">
+						    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+						    <input type="text" class="form-control" id="usd_above" placeholder="USD Above Alert">
+					  	</div>
+					  	<div class="input-group" style="margin-top:5px;">
+						    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+						    <input type="text" class="form-control" id="usd_below" placeholder="USD Below Alert">
+					  	</div>
+					  	<button style="margin-top:5px;" id="save" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+				<div class="row priceshow" style="display:none;">
+					<h2 class="usdprice" style="text-align:center;" ><i class="fa fa-usd" aria-hidden="true"></i>
+						<span id="etnprice">
+							Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+						</span>
+					</h2>
+					<h2 class="btcprice" style="text-align:center;" ><i class="fa fa-btc" aria-hidden="true"></i>
+						<span id="btcprice">
+							Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+						</span>
+					</h2>
+					<center>
+						<button style="margin-top:5px;" id="set_again" class="btn btn-primary">Set Alert</button>
+						<button style="margin-top:5px;" id="clear_alerts" class="btn btn-primary">Clear Alerts</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+	
+	
+
+    var audiobelow = new Audio('below.wav');
+    var audioabove = new Audio('above.wav');
+
+    var usd_above = 0;
+    var usd_below = 0;
+    var activated = 0;
+
+    $.cookie.json = true;
+    if($.cookie().name==""){
+    	$.cookie('name', Math.random(), { expires: 7, path: '/' });
+    }
+
+    if($.cookie().usd_above=="" && $.cookie().usd_below==""){
+    }
+    else{
+    	activated=1;
+		usd_above = $.cookie().usd_above;
+    	usd_below = $.cookie().usd_below;
+    	$('.priceshow').show();
+    	$('.inputform').hide();
+    	setTimeout(showetnprice, 500); 
+    }
+
+
+    $('#clear_alerts').click(function(){
+    	activated=0;
+		usd_above = 0;
+    	usd_below = 0;
+    	$.removeCookie('usd_above');
+    	$.removeCookie('usd_below');
+    	$.removeCookie('name');
+    	$('#usd_above').val(0)
+    	$('#usd_below').val(0)
+    	$('.priceshow').hide();
+    	$('.inputform').show();
+    });
+
+	var getetnprice=function(){
+        return $.ajax({
+            "dataType":"json",
+            "type":"GET",
+            "url":"https://api.coinmarketcap.com/v1/ticker/electroneum/"
+        });
+    };
+
+    var abovetimeout=0;
+    var belowtimeout=0;
+
+    $('#save').click(function(){
+    	activated=1;
+		usd_above = $('#usd_above').val();
+    	usd_below = $('#usd_below').val();
+    	$.cookie('usd_above', usd_above);
+    	$.cookie('usd_below', usd_below);
+    	$('.priceshow').show();
+    	$('.inputform').hide();
+    	showetnprice();
+    });
+
+    $('#set_again').click(function(){
+    	activated=0;
+		usd_above = 0;
+    	usd_below = 0;
+    	$.removeCookie('usd_above');
+    	$.removeCookie('usd_below');
+    	var abovetimeout=0;
+    	var belowtimeout=0;
+    	$('.priceshow').hide();
+    	$('.inputform').show();
+    });
+
+    
+    var showetnprice=function(){
+    	if(activated==1){
+    		getetnprice().done(function(response){
+		        $('#etnprice').text(response[0].price_usd);
+		        $('#etntitle').text(parseFloat(response[0].price_usd)*50.72);
+	         	$('#btcprice').text(response[0].price_btc);
+
+		        if(parseFloat(response[0].price_usd)>=parseFloat(usd_above) ){
+	        		$('.usdprice').css("color", "#2ecc71");
+	        		if(abovetimeout==0){
+	        			audioabove.play();
+	        			abovetimeout=1;
+	        		}
+		        }
+		        else if(parseFloat(response[0].price_usd)<parseFloat(usd_below) ){
+		        	$('.usdprice').css("color", "#e74c3c");
+		        	if(belowtimeout==0){
+	        			audiobelow.play();
+	        			belowtimeout=1;
+	        		}
+	        		
+		        }
+		        else{
+		        	$('.usdprice').css("color", "black");
+		        }
+		        
+		    });
+    	}
+	    
+	};
+
+	var abovetimerreset=function(){
+		abovetimeout=0;
+	}
+	var belowtimerreset=function(){
+		belowtimeout=0;
+	}
+
+    setInterval(showetnprice, 1000); 
+    setInterval(abovetimerreset, 60000);
+    setInterval(belowtimerreset, 60000);
+
+</script>
+</body>
+</html>
