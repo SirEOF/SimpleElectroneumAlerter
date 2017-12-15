@@ -1,54 +1,138 @@
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="css/materialize.min.css">
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  	<!-- Compiled and minified JavaScript -->
+  	
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<script src="js/materialize.min.js"></script>
+	
 	<title id="etntitle">$</title>
+	<style>
+		nav{
+			background-color: #003171;
+		}
+	</style>
 </head>
 <body>
 
+<div class="container-fluid">
+	<nav>
+	  <div class="nav-wrapper" style="margin:0px 30px 0px 30px">
+		    <a href="#!" class="brand-logo">Electroneum Ticker</a>
+		    <ul class="right hide-on-med-and-down">
+		      <li><a href="sass.html"></a></li>
+		      <li><a href="badges.html"></a></li>
+		      <!-- Dropdown Trigger -->
+		      
+		    </ul>
+	  </div>
+	</nav>
 
-<div class="container">
-	<div class="col-xs-6 col-xs-offset-3">
-		<div class="panel panel-primary">
-			<div class="panel-heading">Electroneum Price</div>
-			<div class="panel-body">
-				<div class="row inputform">
-					<div class="col-xs-6">
-						<div class="input-group">
-						    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-						    <input type="text" class="form-control" id="usd_above" placeholder="USD Above Alert">
-					  	</div>
-					  	<div class="input-group" style="margin-top:5px;">
-						    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-						    <input type="text" class="form-control" id="usd_below" placeholder="USD Below Alert">
-					  	</div>
-					  	<button style="margin-top:5px;" id="save" class="btn btn-primary">Save</button>
-					</div>
+	<div class="row">
+        <div class="s12 l4 m6">
+			<div class="card">
+				<div class="card-image">
+				  <img src="http://materializecss.com/images/sample-1.jpg">
+				  	<span class="card-title flow-text">
+							
+				  		<div class="inputform">
+							<div class="col-xs-6">
+								<div class="input-group">
+								    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+								    <input type="text" class="form-control" id="usd_above" placeholder="USD Above Alert">
+							  	</div>
+							  	<div class="input-group" style="margin-top:5px;">
+								    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+								    <input type="text" class="form-control" id="usd_below" placeholder="USD Below Alert">
+							  	</div>
+							  	<button style="margin-top:5px;" id="save" class="btn btn-primary">Save</button>
+							</div>
+						</div>
+
+						<div class="priceshow" style="display:none;">
+							<h2 class="usdprice" style="text-align:center;" ><i class="fa fa-usd" aria-hidden="true"></i>
+								<span id="etnprice">
+									Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+								</span>
+							</h2>
+							<h2 class="btcprice" style="text-align:center;" ><i class="fa fa-btc" aria-hidden="true"></i>
+								<span id="btcprice">
+									Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+								</span>
+							</h2>
+							<center>
+								<button class="waves-effect waves-light btn" style="margin-top:5px;" id="set_again">Set Alert</button>
+								<button class="waves-effect waves-light btn" style="margin-top:5px;" id="clear_alerts">Clear Alerts</button>
+							</center>
+						</div>
+
+				  	</span>
 				</div>
-				<div class="row priceshow" style="display:none;">
-					<h2 class="usdprice" style="text-align:center;" ><i class="fa fa-usd" aria-hidden="true"></i>
-						<span id="etnprice">
-							Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-						</span>
-					</h2>
-					<h2 class="btcprice" style="text-align:center;" ><i class="fa fa-btc" aria-hidden="true"></i>
-						<span id="btcprice">
-							Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-						</span>
-					</h2>
-					<center>
-						<button style="margin-top:5px;" id="set_again" class="btn btn-primary">Set Alert</button>
-						<button style="margin-top:5px;" id="clear_alerts" class="btn btn-primary">Clear Alerts</button>
-					</center>
+			<div class="card-content">
+			  <p>I am a very simple card. I am good at containing small bits of information.
+			  I am convenient because I require little markup to use effectively.</p>
+			</div>
+			<div class="card-action">
+			  <a href="#">This is a link</a>
+			</div>
+			</div>
+        </div>
+		<!-- <div class="col s4">
+			<div class="row inputform">
+				<div class="col-xs-6">
+					<div class="input-group">
+					    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+					    <input type="text" class="form-control" id="usd_above" placeholder="USD Above Alert">
+				  	</div>
+				  	<div class="input-group" style="margin-top:5px;">
+					    <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+					    <input type="text" class="form-control" id="usd_below" placeholder="USD Below Alert">
+				  	</div>
+				  	<button style="margin-top:5px;" id="save" class="btn btn-primary">Save</button>
 				</div>
 			</div>
+
+			<div class="row priceshow" style="display:none;">
+				<h2 class="usdprice" style="text-align:center;" ><i class="fa fa-usd" aria-hidden="true"></i>
+					<span id="etnprice">
+						Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+					</span>
+				</h2>
+				<h2 class="btcprice" style="text-align:center;" ><i class="fa fa-btc" aria-hidden="true"></i>
+					<span id="btcprice">
+						Loading ..<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+					</span>
+				</h2>
+				<center>
+					<button class="waves-effect waves-light btn" style="margin-top:5px;" id="set_again">Set Alert</button>
+					<button class="waves-effect waves-light btn" style="margin-top:5px;" id="clear_alerts">Clear Alerts</button>
+				</center>
+			</div>
+		</div> -->
+
+		<div class="col s8">
+		 	<div class="card">
+			    <div class="card-image waves-effect waves-block waves-light">
+			      <img class="activator" src="images/office.jpg">
+			    </div>
+			    <div class="card-content">
+			      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+			      <p><a href="#">This is a link</a></p>
+			    </div>
+			    <div class="card-reveal">
+			      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+			      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+			    </div>
+		  	</div>
 		</div>
 	</div>
+
 </div>
+
+
 
 
 
